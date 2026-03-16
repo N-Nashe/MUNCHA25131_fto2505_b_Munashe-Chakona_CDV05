@@ -146,10 +146,43 @@ function setupRevealAnimations() {
     revealElements.forEach((element) => observer.observe(element));
 }
 
+function setupActiveNavHighlight() {
+    const sections = document.querySelectorAll("main section[id]");
+    const navLinks = document.querySelectorAll("nav a[href^='#']");
+
+    if (!sections.length || !navLinks.length) {
+        return;
+    }
+
+    const setActive = (id) => {
+        navLinks.forEach((link) => {
+            const isActive = link.getAttribute("href") === `#${id}`;
+            link.classList.toggle("nav-link-active", isActive);
+        });
+    };
+
+    const observer = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    setActive(entry.target.id);
+                }
+            });
+        },
+        {
+            threshold: 0.3,
+            rootMargin: "-10% 0px -60% 0px"
+        }
+    );
+
+    sections.forEach((section) => observer.observe(section));
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     setupMobileMenu();
     setupTourButton();
     setupRevealAnimations();
+    setupActiveNavHighlight();
 });
 
 
