@@ -3,37 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Portfolio of Munashe Chakona, a web developer building performant and user-focused web applications.">
     <link rel="stylesheet" href="styles.css">
-    <script src="scroll.js"></script>
-     
-    <title>Personal Portfolio Website</title>
+    <script src="scroll.js" defer></script>
+    <title>Munashe Chakona | Web Developer Portfolio</title>
 </head>
 <body>
-    <nav>
-        <h2>Munashe Chakona</h2>
-        <ul>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+
+    <nav aria-label="Main navigation">
+        <h2 class="brand">Munashe Chakona</h2>
+        <button id="menu-toggle" class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-menu" aria-label="Open navigation menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <ul id="main-menu" class="nav-links">
             <li><a href="#about">About</a></li>
+            <li><a href="#services">Services</a></li>
             <li><a href="#projects">Projects</a></li>
             <li><a href="#contact">Contact</a></li>
         </ul>
     </nav>
 
-    <container>
-        <section class="hero">
-            <h1>Hi, My name is Munashe Welcome to my website let's take you through!</h1>
+    <main id="main-content">
+        <section class="hero reveal" id="top">
+            <p class="eyebrow">Web Developer</p>
+            <h1>I build fast, clean, and user-focused web experiences.</h1>
+            <p class="hero-subtext">I design and develop modern web applications with strong UX, clear architecture, and reliable performance.</p>
             <div class="cta-buttons">
-                <button onclick="startTour()" class="btn">Let's Go!</button>
-                <button onclick="closeWebsite()" class="btn">Nah.</button> 
+                <a class="btn btn-primary" href="#projects">View Projects</a>
+                <a class="btn btn-outline" href="#contact">Contact Me</a>
+                <button id="tour-button" class="btn btn-soft" type="button" aria-pressed="false">Start Tour</button>
             </div>
-
-            
-            
-       
+            <a class="cv-link" href="mailto:munalechakona@gmail.com?subject=CV%20Request%20-%20Munashe%20Chakona">Request CV via Email</a>
         </section>
 
-        <section id="about">
+        <section id="about" class="reveal">
             <h2>About Me</h2>
-            <p>I'm a web developer who loves creating clean, functional websites. I work with HTML, CSS, JavaScript, and modern frameworks.</p>
+            <p>I am a web developer focused on building websites and web apps that are easy to use, easy to maintain, and built for real users. I enjoy turning requirements into polished products with clean front-end code and dependable back-end logic.</p>
             
             <h3>Skills</h3>
             <ul class="skills">
@@ -45,43 +53,84 @@
             </ul>
         </section>
 
-        <section id="projects">
+        <section id="services" class="reveal">
+            <h2>What I Can Build</h2>
+            <ul class="services-list">
+                <li>Responsive websites and landing pages</li>
+                <li>Single-page applications with modern JavaScript frameworks</li>
+                <li>API-connected dashboards and booking flows</li>
+                <li>UI redesigns focused on clarity and conversion</li>
+            </ul>
+        </section>
+
+        <section id="projects" class="reveal">
             <h2>My Projects</h2>
             
-            <div class="project">
+            <article class="project">
                 <h3>Dynamic Kanban Board</h3>
-                <p>A responsive and functional Kanban board where you can add tasks.
-                    as well as delete tasks off the board some other features are a dark mode toggle to toggle between
-                    light and dark mode and a responsive modal where you can also update existing tasks on the board
-                </p>
-                <a href="#" target="_blank">View Project</a> | <a href="https://github.com/N-Nashe/MUNCHA25131_FTO2505_B_MunasheChakona_JSLPortfolioPiece.git" target="_blank">GitHub</a>
-            </div>
+                <p>A task management board that supports adding, editing, and deleting tasks with a clean, responsive UI and modal-driven workflows.</p>
+                <ul class="project-highlights">
+                    <li>Implemented dynamic task updates without page refreshes</li>
+                    <li>Added light and dark mode support for better usability</li>
+                    <li>Built reusable UI patterns for modals and status columns</li>
+                </ul>
+                <p class="project-stack">Stack: HTML, CSS, JavaScript</p>
+                <div class="project-links">
+                    <a href="https://github.com/N-Nashe/MUNCHA25131_FTO2505_B_MunasheChakona_JSLPortfolioPiece.git" target="_blank" rel="noopener noreferrer">View Project</a>
+                    <a href="https://github.com/N-Nashe/MUNCHA25131_FTO2505_B_MunasheChakona_JSLPortfolioPiece.git" target="_blank" rel="noopener noreferrer">GitHub</a>
+                </div>
+            </article>
 
-            <div class="project">
-                <h3>Responsive Portfolio Website</h3>
-                <p>A website not too dissimilar to this one where I outline my skills for employers as well as my various experience
-                    to showcase my development capabilities. as well as my web design skills.
-                </p>
-                <a href="#" target="_blank">View Project</a> | <a href="https://github.com/N-Nashe/MUNCHA25131_fto2502_b2_MunasheChakona_SDF_Portfolio_Piece.git" target="_blank">GitHub</a>
-            </div>
+            <article class="project">
+                <h3>Cape-Terroir</h3>
+                <p>A full-stack booking platform for a wine-tour business where users can explore tour offerings and complete bookings online.</p>
+                <ul class="project-highlights">
+                    <li>Created tour discovery flows with clear service details</li>
+                    <li>Integrated booking functionality for conversion-focused UX</li>
+                    <li>Structured content to support client growth and visibility</li>
+                </ul>
+                <p class="project-stack">Stack: JavaScript, Node.js, Full-stack tooling</p>
+                <div class="project-links">
+                    <a href="https://capeterrior.vercel.app/" target="_blank" rel="noopener noreferrer">View Project</a>
+                    <a href="https://github.com/N-Nashe/Cape-Terrior" target="_blank" rel="noopener noreferrer">GitHub</a>
+                </div>
+            </article>
 
-            <div class="project">
-                <h3>Podcast app</h3>
-                <p>A full-stack application with podcasts rendered on the page allowing for playback, favoriting and searching of podcasts. 
-                    There is also a comphrehensive dark mode feature allowing users to toggle between light and dark mode.
-         
-                </p>
-                <a href="#" target="_blank">View Project</a> | <a href="https://github.com/N-Nashe/MUNCHA25131_fto2505_b_Munashe-Chakona_DJSPP.git" target="_blank">GitHub</a>
-            </div>
+            <article class="project">
+                <h3>Podcast App</h3>
+                <p>A full-stack podcast experience that supports discovery, playback, search, and favoriting with a responsive interface.</p>
+                <ul class="project-highlights">
+                    <li>Built searchable podcast listings with interactive controls</li>
+                    <li>Implemented favorites workflow for repeat engagement</li>
+                    <li>Added comprehensive light/dark theming support</li>
+                </ul>
+                <p class="project-stack">Stack: JavaScript, API Integration, Full-stack tooling</p>
+                <div class="project-links">
+                    <a href="https://djs-portfolio-piece.vercel.app/" target="_blank" rel="noopener noreferrer">View Project</a>
+                    <a href="https://github.com/N-Nashe/MUNCHA25131_fto2505_b_Munashe-Chakona_DJSPP.git" target="_blank" rel="noopener noreferrer">GitHub</a>
+                </div>
+            </article>
         </section>
 
-        <section id="contact">
+        <section id="feedback" class="reveal">
+            <h2>Client Feedback</h2>
+            <blockquote>
+                "Professional, thoughtful, and focused on delivering user-friendly solutions."
+            </blockquote>
+            <p class="feedback-note">References available on request.</p>
+        </section>
+
+        <section id="contact" class="reveal">
             <h2>Get In Touch</h2>
-            <p>Email: munalechakona@gmail.com</p>
-            <p>GitHub: <a href="https://github.com/N-Nashe" target="_blank">github.com/N-Nashe</a></p>
-            <p>LinkedIn: <a href="https://www.linkedin.com/in/munashe-chakona" target="_blank">www.linkedin.com/in/munashe-chakona</a></p>
+            <p>Email: <a href="mailto:munalechakona@gmail.com">munalechakona@gmail.com</a></p>
+            <p>GitHub: <a href="https://github.com/N-Nashe" target="_blank" rel="noopener noreferrer">github.com/N-Nashe</a></p>
+            <p>LinkedIn: <a href="https://www.linkedin.com/in/munashe-chakona" target="_blank" rel="noopener noreferrer">www.linkedin.com/in/munashe-chakona</a></p>
+            <p class="contact-cta">Open to freelance, collaboration, and junior-to-mid web development roles.</p>
         </section>
-      
-    </container>
+
+        <footer>
+            <p>&copy; 2026 Munashe Chakona. Built with HTML, CSS, and JavaScript.</p>
+        </footer>
+    </main>
 </body>
 </html>

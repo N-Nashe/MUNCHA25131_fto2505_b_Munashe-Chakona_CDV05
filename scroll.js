@@ -1,64 +1,156 @@
-// Simple auto-scroll tour for My Portfolio
+const tourSections = ["#about", "#services", "#projects", "#contact"];
+const tourDelayMs = 2200;
+const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+let tourTimeoutId = null;
+let tourIndex = 0;
+let isTourRunning = false;
+
+function updateTourButton() {
+    const tourButton = document.getElementById("tour-button");
+    if (!tourButton) {
+        return;
+    }
+
+    if (isTourRunning) {
+        tourButton.textContent = "Stop Tour";
+        tourButton.setAttribute("aria-pressed", "true");
+    } else {
+        tourButton.textContent = "Start Tour";
+        tourButton.setAttribute("aria-pressed", "false");
+    }
+}
+
+function stopTour() {
+    if (tourTimeoutId) {
+        clearTimeout(tourTimeoutId);
+    }
+
+    tourTimeoutId = null;
+    isTourRunning = false;
+    updateTourButton();
+}
+
+function scrollToSection(selector) {
+    const section = document.querySelector(selector);
+    if (!section) {
+        return;
+    }
+
+    section.scrollIntoView({
+        behavior: prefersReducedMotion ? "auto" : "smooth",
+        block: "start"
+    });
+}
+
+function runTourStep() {
+    if (!isTourRunning || tourIndex >= tourSections.length) {
+        stopTour();
+        return;
+    }
+
+    scrollToSection(tourSections[tourIndex]);
+    tourIndex += 1;
+    tourTimeoutId = setTimeout(runTourStep, tourDelayMs);
+}
 
 function startTour() {
-    const sections = ['#about', '#projects', '#contact'];
-    let index = 0;
-    
-    function scrollNext() {
-        if (index < sections.length) {
-            document.querySelector(sections[index]).scrollIntoView({ behavior: 'smooth' });
-            index++;
-            setTimeout(scrollNext, 3000);
-        }
+    if (isTourRunning) {
+        stopTour();
+        return;
     }
-    
-    scrollNext();
+
+    isTourRunning = true;
+    tourIndex = 0;
+    updateTourButton();
+    runTourStep();
 }
 
-// Close website functionality for "Nah" button
-function closeWebsite() {
-    // Add fade out effect
-    document.body.style.transition = "opacity 0.5s ease";
-    document.body.style.opacity = "0";
-    
-    // After fade out, show "closed" message
-    setTimeout(() => {
-        document.body.innerHTML = `
-            <div style="
-                text-align: center; 
-                padding: 100px 20px; 
-                font-family: Arial, sans-serif;
-                background: linear-gradient(135deg, #667eea 0%, #3db68bff 100%);
-                color: white;
-                min-height: 100vh;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-            ">
-                <h1 style="font-size: 3rem; margin-bottom: 20px;">🖐🏾 Website Closed!</h1>
-                <p style="font-size: 1.2rem; margin-bottom: 30px;">Thanks for considering My Portfolio!</p>
-                <p style="font-size: 1rem; margin-bottom: 40px; opacity: 0.8;"></p>
-                <button onclick="location.reload()" style="
-                    background: white;
-                    color: #37be95ff;
-                    border: none;
-                    padding: 15px 30px;
-                    font-size: 1.1rem;
-                    border-radius: 50px;
-                    cursor: pointer;
-                    font-weight: bold;
-                    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-                    transition: transform 0.2s ease;
-                " onmouseover="this.style.transform='scale(1.05)'" 
-                   onmouseout="this.style.transform='scale(1)'">
-                    Let's go back! 👀
-                </button>
-            </div>
-        `;
-        document.body.style.opacity = "1";
-    }, 500);
+function setupTourButton() {
+    const tourButton = document.getElementById("tour-button");
+    if (!tourButton) {
+        return;
+    }
+
+    tourButton.addEventListener("click", startTour);
+    updateTourButton();
 }
-    
+
+function setupMobileMenu() {
+    const menuToggle = document.getElementById("menu-toggle");
+    const navLinks = document.getElementById("main-menu");
+
+    if (!menuToggle || !navLinks) {
+        return;
+    }
+
+    const closeMenu = () => {
+        navLinks.classList.remove("is-open");
+        menuToggle.setAttribute("aria-expanded", "false");
+        menuToggle.setAttribute("aria-label", "Open navigation menu");
+    };
+
+    const openMenu = () => {
+        navLinks.classList.add("is-open");
+        menuToggle.setAttribute("aria-expanded", "true");
+        menuToggle.setAttribute("aria-label", "Close navigation menu");
+    };
+
+    menuToggle.addEventListener("click", () => {
+        const isOpen = navLinks.classList.contains("is-open");
+
+        if (isOpen) {
+            closeMenu();
+        } else {
+            openMenu();
+        }
+    });
+
+    navLinks.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", closeMenu);
+    });
+
+    window.addEventListener("resize", () => {
+        if (window.innerWidth > 640) {
+            closeMenu();
+        }
+    });
+}
+
+function setupRevealAnimations() {
+    const revealElements = document.querySelectorAll(".reveal");
+    if (!revealElements.length) {
+        return;
+    }
+
+    if (prefersReducedMotion) {
+        revealElements.forEach((element) => element.classList.add("is-visible"));
+        return;
+    }
+
+    const observer = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("is-visible");
+                    observer.unobserve(entry.target);
+                }
+            });
+        },
+        {
+            threshold: 0.14,
+            rootMargin: "0px 0px -24px 0px"
+        }
+    );
+
+    revealElements.forEach((element) => observer.observe(element));
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    setupMobileMenu();
+    setupTourButton();
+    setupRevealAnimations();
+});
+
 
 
